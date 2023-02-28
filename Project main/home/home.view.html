@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">Todoo</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <a href="#!/login" class="btn btn-outline-light float-end" type="submit" ng-click="signOut()">Logout</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--  -->
+<div id="section_0" ng-controller="HomeController">
+    <div id="todoContainer" class="container">
+        <h1>Hi {{vm.user.firstName}}!</h1>
+        <h1>TODO LIST</h1>
+        <h3>Add Item</h3>
+        <div class="addContainer">
+            <input id="new-task" type="text" ng-model="vm.newTaskName">
+            <button class="addBtn" type="submit" ng-click="vm.addTask(newTaskName)">Add</button>
+        </div>
+
+
+        <h3>Todo</h3>
+        <input id="toggle-all" type="checkbox" ng-model="markAll" ng-click="vm.toggleMarkAll()" />
+        <label for="toggle-all">Mark all as complete</label>
+        <ul id="incomplete-tasks">
+            <li class="align" ng-repeat="task in vm.tasks">
+                <input type="checkbox" ng-model="task.isChecked">
+                <label class="checked-{{task.isChecked}}">{{task.taskName}}</label>
+                <!-- <button class="editBtn" type="button" data-bs-toggle="modal" data-bs-target="#editModal"
+                    ng-click="setId($index)">Edit</button> -->
+
+
+                <button class="deleteBtn" type="button" ng-click="vm.tasks.splice($index, 1)">Delete</button>
+            </li>
+        </ul>
+        <div class="text-center">
+            <div class="task-count text-center">{{vm.remaining(task)}} of {{vm.tasks.length}} remaining</div>
+            <a id="clear-completed" class="text-center btn btn-outline-danger mt-2" ng-click="vm.clear()"
+                ng-show="vm.hasDone()">
+                Clear
+                <span>{{(vm.tasks.length - vm.remaining())}} {{vm.itemText()}}</span>
+            </a>
+        </div>
+        <!-- Edit task modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit todo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="edit-task" class="col-form-label">Edit: </label>
+                        <input type="text" class="form-control" id="edit-task" ng-model="editedTask">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="vm.editTodo(editedTask, $index)">Save
+                            changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal end -->
+    </div>
+
+</div>
+<!--  -->
+<footer class="footer">
+    <h1 class="footerName">Mohamad Chebli - AngularJS Todo app</h1>
+    <a class="githubLink" href="https://github.com/Mohamad44c">
+        <i class="fa-brands fa-github mx-3"></i>
+    </a>
+</footer>
